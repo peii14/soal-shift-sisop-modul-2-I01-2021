@@ -36,10 +36,40 @@ Struct getTime(){
 
 };
 
+void encrypt(char folder[]){
+   FILE *fp;
+   strcat(folder, "status.txt");
+   fp  = fopen (folder, "w");
+   int key=4;
+   char message[]="Download Success", ch;
+   for(int i = 0; message[i] != '\0'; ++i){
+		ch = message[i];
+		if(ch >= 'a' && ch <= 'z'){
+			ch = ch + key;
+			if(ch > 'z'){
+				ch = ch - 'z' + 'a' - 1;
+			}
+			message[i] = ch;
+		}
+		else if(ch >= 'A' && ch <= 'Z'){
+			ch = ch + key;
+			if(ch > 'Z'){
+				ch = ch - 'Z' + 'A' - 1;
+			}
+			message[i] = ch;
+		}
+	}
+   printf("Download Success = %s\n",message);
+   for (int i = 0;i<16; i++) 
+      fputc(message[i], fp);
+   fclose(fp);
+}
+
 int main(){
    int createdir;
    char image[30],folder[30];
    Struct timeNow;
+ 
    //take present time
    timeNow=getTime();
 
@@ -50,7 +80,7 @@ int main(){
    //owner can execute, also group and other
    createdir= mkdir(folder, S_IRUSR | S_IRGRP | S_IROTH | S_IXUSR | S_IXGRP | S_IXOTH | S_IWUSR | S_IWGRP | S_IWGRP);
 
-   //download image
+   // download image
    for(int i=0;i<10;i++){
       if(fork()==0){
          printf("Duar\n");
@@ -58,11 +88,15 @@ int main(){
          timeNow=getTime();
          //image naming
          snprintf(image,30,"%02d-%02d-%02d_%02d:%02d:%02d.jpg",timeNow.year,timeNow.month,timeNow.day,timeNow.hours,timeNow.minutes,timeNow.seconds);
-         strcat(folder, image);
-         
+         strcat(folder, image); 
          execl("/usr/bin/wget", "wget", "-O",folder, "https://picsum.photos/200.jpg", NULL);
       }
       sleep(5);
    }
+   encrypt(folder);
+   //zip file
+   // zip -rm -P $password  Kumpulan.zip ./$logfolder ./$folderkucing ./$folderkelinci -x *.sh* *.log* *.tab*
+   char zipfile[]=strcat(folder,".zip");
+   // execl("/usr/bin/zip","zip","-rm",zipfile,"folder",NULL);
    return 0;
 }
