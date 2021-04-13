@@ -6,6 +6,8 @@
 #include <curl/easy.h>
 #include <unistd.h>
 #include <time.h>
+#include <string.h>
+
 
 // run with gcc -o soal soal3.c -lcurl
 struct waktu{
@@ -34,26 +36,20 @@ Struct getTime(){
 
 };
 
-size_t write_data(void *ptr, size_t size, size_t nmemb, FILE *stream) {
-    size_t written = fwrite(ptr, size, nmemb, stream);
-    return written;
-}
-
 int main(){
    int createdir;
-   char image[30];
+   char image[30],folder[30];
    Struct timeNow;
    //take present time
    timeNow=getTime();
 
    //concate folder name
-   char folder[30];
-   snprintf(folder,30,"./%02d-%02d-%02d_%02d:%02d:%02d",timeNow.year,timeNow.month,timeNow.day,timeNow.hours,timeNow.minutes,timeNow.seconds);
+   snprintf(folder,30,"./%02d-%02d-%02d_%02d:%02d:%02d/",timeNow.year,timeNow.month,timeNow.day,timeNow.hours,timeNow.minutes,timeNow.seconds);
 
    //owner can read, group can read, other can read
    //owner can execute, also group and other
-   createdir= mkdir(folder, S_IRUSR | S_IRGRP | S_IROTH | S_IXUSR | S_IXGRP | S_IXOTH);
-   
+   createdir= mkdir(folder, S_IRUSR | S_IRGRP | S_IROTH | S_IXUSR | S_IXGRP | S_IXOTH | S_IWUSR | S_IWGRP | S_IWGRP);
+
    //download image
    for(int i=0;i<10;i++){
       if(fork()==0){
@@ -62,7 +58,9 @@ int main(){
          timeNow=getTime();
          //image naming
          snprintf(image,30,"%02d-%02d-%02d_%02d:%02d:%02d.jpg",timeNow.year,timeNow.month,timeNow.day,timeNow.hours,timeNow.minutes,timeNow.seconds);
-         execl("/usr/bin/wget", "wget", "-O",image, "https://picsum.photos/200.jpg", NULL);
+         strcat(folder, image);
+         
+         execl("/usr/bin/wget", "wget", "-O",folder, "https://picsum.photos/200.jpg", NULL);
       }
       sleep(5);
    }
