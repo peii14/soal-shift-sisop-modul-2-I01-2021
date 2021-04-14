@@ -90,6 +90,7 @@ int main(){
          //image naming
          snprintf(image,sizeof image,"%02d-%02d-%02d_%02d:%02d:%02d.jpg",timeNow.year,timeNow.month,timeNow.day,timeNow.hours,timeNow.minutes,timeNow.seconds);
          snprintf(imagepath,sizeof imagepath,"./%s/%s",folder,image); 
+         //blank space due to bugs on wget that are redirecting to log file afterworth
          execl("/usr/bin/wget", "wget", "-q","-O",imagepath, "https://picsum.photos/200.jpg","", NULL);
       }
       sleep(5);
