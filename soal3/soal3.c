@@ -38,8 +38,9 @@ Struct getTime(){
 
 void encrypt(char folder[]){
    FILE *fp;
-   strcat(folder, "status.txt");
-   fp  = fopen (folder, "w");
+   char txtpath[40];
+   snprintf(txtpath,sizeof txtpath,"./%s/status.txt",folder);
+   fp  = fopen (txtpath, "w");
    int key=4;
    char message[]="Download Success", ch;
    for(int i = 0; message[i] != '\0'; ++i){
@@ -67,14 +68,14 @@ void encrypt(char folder[]){
 
 int main(){
    int createdir;
-   char image[30],folder[30];
+   char image[30],folder[30],imagepath[100];
    Struct timeNow;
  
    //take present time
    timeNow=getTime();
 
    //concate folder name
-   snprintf(folder,30,"./%02d-%02d-%02d_%02d:%02d:%02d/",timeNow.year,timeNow.month,timeNow.day,timeNow.hours,timeNow.minutes,timeNow.seconds);
+   snprintf(folder,sizeof folder,"%02d-%02d-%02d_%02d:%02d:%02d",timeNow.year,timeNow.month,timeNow.day,timeNow.hours,timeNow.minutes,timeNow.seconds);
 
    //owner can read, group can read, other can read
    //owner can execute, also group and other
@@ -87,16 +88,16 @@ int main(){
          //update present time in every loop
          timeNow=getTime();
          //image naming
-         snprintf(image,30,"%02d-%02d-%02d_%02d:%02d:%02d.jpg",timeNow.year,timeNow.month,timeNow.day,timeNow.hours,timeNow.minutes,timeNow.seconds);
-         strcat(folder, image); 
-         execl("/usr/bin/wget", "wget", "-O",folder, "https://picsum.photos/200.jpg", NULL);
+         snprintf(image,sizeof image,"%02d-%02d-%02d_%02d:%02d:%02d.jpg",timeNow.year,timeNow.month,timeNow.day,timeNow.hours,timeNow.minutes,timeNow.seconds);
+         snprintf(imagepath,sizeof imagepath,"./%s/%s",folder,image); 
+         execl("/usr/bin/wget", "wget", "-q","-O",imagepath, "https://picsum.photos/200.jpg","", NULL);
       }
       sleep(5);
    }
    encrypt(folder);
    //zip file
-   // zip -rm -P $password  Kumpulan.zip ./$logfolder ./$folderkucing ./$folderkelinci -x *.sh* *.log* *.tab*
-   char zipfile[]=strcat(folder,".zip");
-   // execl("/usr/bin/zip","zip","-rm",zipfile,"folder",NULL);
+   char zipfile[40];
+   snprintf(zipfile,sizeof zipfile,"%s.zip",folder);
+   execl("/usr/bin/zip","zip","-rm",zipfile,folder,"-x","*.c",NULL);
    return 0;
 }
