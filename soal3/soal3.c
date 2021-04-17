@@ -107,7 +107,6 @@ int main(int argc, char **argv){
       
       pid_t child1,child2,child3;
       child1=fork();
-      int stat;
       if(child1 == 0){
          child2=fork();
          if(child2==0){
