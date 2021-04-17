@@ -9,8 +9,6 @@
 #include <string.h>
 #include <stdlib.h>
 
-
-// run with gcc -o soal soal3.c -lcurl
 struct waktu{
    int hours, minutes, seconds, day, month, year;
 };
@@ -71,7 +69,7 @@ void encrypt(char folder[]){
 
 int main(int argc, char **argv){
    // int createdir;
-   char image[30],folder[30],imagepath[100];
+   char image[30],folder[30],imagepath[100],link[50];
    Struct timeNow;
    pid_t pid, sid, parent_id;        
    parent_id = getpid();
@@ -113,7 +111,6 @@ int main(int argc, char **argv){
       if(child1 == 0){
          child2=fork();
          if(child2==0){
-         //since create dir is not allowe until 15 april
          // createdir= mkdir(folder, S_IRUSR | S_IRGRP | S_IROTH | S_IXUSR | S_IXGRP | S_IXOTH | S_IWUSR | S_IWGRP | S_IWGRP);
             char *argvmk[] = {"mkdir", "-p", folder, NULL};
             execv("/bin/mkdir",argvmk);
@@ -124,14 +121,18 @@ int main(int argc, char **argv){
             for(int i=0;i<10;i++){
                if(fork()==0){
                   printf("Duar\n");
+                  //epoch time
+                  int epoch = (int)time(NULL);
+                  epoch = (epoch % 1000)+100;
                   //update present time in every loop
                   timeNow=getTime();
                   //image naming
                   snprintf(image,sizeof image,"%02d-%02d-%02d_%02d:%02d:%02d.jpg",timeNow.year,timeNow.month,timeNow.day,timeNow.hours,timeNow.minutes,timeNow.seconds);
                   snprintf(imagepath,sizeof imagepath,"./%s/%s",folder,image); 
+                  snprintf(link,sizeof link,"https://picsum.photos/%d.jpg",epoch);
                   //blank space due to bugs on wget that are redirecting to log file afterworth
                   //ga ngerti epoch cuy
-                  execl("/usr/bin/wget", "wget", "-q","-O",imagepath, "https://picsum.photos/200.jpg","", NULL);
+                  execl("/usr/bin/wget", "wget", "-q","-O",imagepath, link,"", NULL);
                }
                sleep(5);
             }
