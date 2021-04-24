@@ -251,3 +251,117 @@ Every pet is saved with the format [pet species]:[pet name]:[pet age in years].
 If there exists more than 1 pet, the data is separated with an underscore(_).
 You are not allowed to use system(), mkdir(), dan rename() C functions.
 Use fork dan exec.
+
+
+3. Ranora is an Informatics Engineering student who is currently undergoing an internship at a well-known company called "FakeKos Corp.", a company engaged in 
+data security. Because Ranora is still an apprentice, the workload is not as big as the workload of the company's permanent workers. On Ranora's first day of 
+work, Ranora's apprentice tutor gave her the task of making a program.
+
+A.Ranora must create a C program which every 40 seconds creates a directory with a name according to the timestamp [YYYY-mm-dd_HH:ii:ss].
+
+B.Each directory is filled with 10 images downloaded from https://picsum.photos/, where each image will be downloaded every 5 seconds. Each downloaded image will be named with a timestamp format [YYYY-mm-dd_HH:ii:ss] and the image is square with the size (n% 1000) + 50 pixels where n is the Unix Epoch time.
+
+
+
+     for(int i=0;i<10;i++){
+               if(fork()==0){
+                  printf("Duar\n");
+                  //epoch time
+                  int epoch = (int)time(NULL);
+                  epoch = (epoch % 1000)+100;
+                  //update present time in every loop
+                  timeNow=getTime();
+                  //image naming
+                  snprintf(image,sizeof image,"%02d-%02d-%02d_%02d:%02d:%02d.jpg",timeNow.year,timeNow.month,timeNow.day,timeNow.hours,timeNow.minutes,timeNow.seconds);
+                  snprintf(imagepath,sizeof imagepath,"./%s/%s",folder,image); 
+                  snprintf(link,sizeof link,"https://picsum.photos/%d.jpg",epoch);
+                  //blank space due to bugs on wget that are redirecting to log file afterworth
+                  //ga ngerti epoch cuy
+                  execl("/usr/bin/wget", "wget", "-q","-O",imagepath, link,"", NULL);
+               }
+               sleep(5);
+            }
+            encrypt(folder);
+            //zip file
+            char zipfile[40];
+            snprintf(zipfile,sizeof zipfile,"%s.zip",folder);
+            execl("/usr/bin/zip","zip","-rm",zipfile,folder,"-x","*.c",NULL);
+         }
+      }
+      else sleep(40);
+      
+
+C.After the directory has been filled with 10 images, the program will create a file "status.txt", which contains the message "Download Success" which is 
+encrypted with the Caesar Cipher technique and with shift 5. Caesar Cipher is a simple encryption technique which can perform encryption. string according to the 
+shift / key that we specify. For example, the letter "A" will be encrypted with shift 4 it will become "E". Because Ranora is a perfectionist and neat person, he 
+wants after the file is created, the directory will be zipped and the directory will be deleted, leaving only the zip file.
+
+
+    void encrypt(char folder[]){
+       FILE *fp;
+       char txtpath[40];
+       snprintf(txtpath,sizeof txtpath,"./%s/status.txt",folder);
+       fp  = fopen (txtpath, "w");
+       int key=4;
+       //caesar cipher algorithm
+       char message[]="Download Success", ch;
+       for(int i = 0; message[i] != '\0'; ++i){
+            ch = message[i];
+            if(ch >= 'a' && ch <= 'z'){
+                ch = ch + key;
+                if(ch > 'z'){
+                    ch = ch - 'z' + 'a' - 1;
+                }
+                message[i] = ch;
+            }
+            else if(ch >= 'A' && ch <= 'Z'){
+                ch = ch + key;
+                if(ch > 'Z'){
+                    ch = ch - 'Z' + 'A' - 1;
+                }
+                message[i] = ch;
+            }
+        }
+       //write to txt
+       printf("Download Success = %s\n",message);
+       for (int i = 0;i<16; i++) 
+          fputc(message[i], fp);
+       fclose(fp);
+    }
+    
+
+
+D. To make it easier to control the program, the Ranora apprentice supervisor wants the program to produce an executable "Killer" program, where the program will 
+terminate all running program processes and will run itself after the program is run. Because Ranora is interested in something new, Ranora has an idea for the 
+"Killer" program that was made, it must be a bash program.
+
+E.The Ranora apprentice supervisor also wants the main program created by Ranora to run in two modes. To activate the first mode, the program must be executed with 
+the -z argument, and when it is executed in the first mode, the main program will immediately execute all its operations when the Killer program is run. 
+Meanwhile, to activate the second mode, the program must be run with the -x argument, and when run in the second mode, the main program will stop allowing the 
+processes in each directory that are still running until it is finished (The directory that has been created will download the image to completion and create a 
+txt file, then zip and delete the directory).
+
+     FILE *killer;
+       killer = fopen("killer.sh", "w");
+       //when -z stop everything immediatly when -x stop after ziping
+       if (strcmp(argv[1], "-z") == 0)
+          fprintf(killer, "#!/bin/bash\nkill -9 -%d\n rm killer.sh", getpid());
+       else if (strcmp(argv[1], "-x") == 0)
+          fprintf(killer, "#!/bin/bash\nkill %d\n rm killer.sh", getpid());
+
+       fclose(killer);
+       //to be executable bash
+       if(fork() == 0){
+          char *argvmod[] = {"chmod", "+x", "killer.sh", NULL};
+          execv("/bin/chmod", argvmod);
+       }
+       //close read input and write output
+       close(STDIN_FILENO);
+       close(STDOUT_FILENO);
+
+
+
+
+
+
+
