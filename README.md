@@ -4,22 +4,27 @@
 In the meantime, Steven hates SISOP Course very much like no other, Few hours after breaking up with his girlfriend, he found another  woman named Stevany, but Stevany is the opposite of him because she likes SISOP course very much. Steven wanted to look good at SISOP course to impress her.
 
 On her birthday, he wanted to give her a zip file containing all things that she likes. He wanted the zip to be organized by making a new folder for each file extension. 
+
 (a) Because she likes the letter Y so much, He wanted the name of the folder as Musyik for mp3, Fylm for mp4, and Pyoto for jpg
+	- The function using mkdir to create new directory.
 ```shell
 char *argv[] = {"mkdir","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Musyik","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Fylm","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Pyoto",NULL};
 execv("/bin/mkdir",argv);
 ```
 (b) For music, he downloads it from the link below, so are the cases for films and photos.
+	- The function using wget to download all the file that needed and need to be quite "-q", and change the name to what you want "-O".
 ```shell
 char *argv[] = {"wget","-q","--no-check-certificate","https://drive.google.com/uc?id=1ZG8nRBRPquhYXq_sISdsVcXx5VdEgi-J&export=download","-O","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1//Musik_For_Stevany.zip",NULL};
 execv("/bin/wget",argv);
 ```
 (c) he didn’t want the folder to contain the zip files so he extracts the files first after downloading it. 
+	- The function to extract the sip using "unzip" quietly "-q". 
 ```shell
 char *argv[] = {"unzip","-q","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Musik_For_Stevany.zip","-d","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1",NULL};
 execv("/bin/unzip",argv);
 ```
 (d) moving it to the folder that has been made (only the files).
+	- Move function that move a file manually.
 ```shell
 void mv(char *basepath,char *destination){
 	char path[1000];
@@ -48,6 +53,7 @@ void mv(char *basepath,char *destination){
 	closedir(dir);
 }
 ```
+    - Calling the function of move in main class.
 ```shell
 mv("/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/MUSIK","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Musyik");
 ```
