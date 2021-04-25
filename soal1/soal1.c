@@ -11,53 +11,80 @@
 #include <time.h>
 #include <dirent.h>
 
-int status;
-
 void d1() {
-        char *wget[] = {"wget","-q","--no-check-certificate","https://drive.google.com/uc?id=1FsrAzb9B5ixooGUs0dGiBr-rC7TS9wTD&export=download","-O","Photo_for_Stevany.zip",NULL};
-        execv("/bin/wget", wget);
+        char *argv[] = {"wget","-q","--no-check-certificate","https://drive.google.com/uc?id=1FsrAzb9B5ixooGUs0dGiBr-rC7TS9wTD&export=download","-O","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Photo_for_Stevany.zip",NULL};
+        execv("/bin/wget", argv);
 }
 void d2() {
-        char *wget2[] = {"wget","-q","--no-check-certificate","https://drive.google.com/uc?id=1ZG8nRBRPquhYXq_sISdsVcXx5VdEgi-J&export=download","-O","Music_for_Stevany.zip",NULL};
-        execv("/bin/wget", wget2);
+        char *argv[] = {"wget","-q","--no-check-certificate","https://drive.google.com/uc?id=1ZG8nRBRPquhYXq_sISdsVcXx5VdEgi-J&export=download","-O","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Music_for_Stevany.zip",NULL};
+        execv("/bin/wget", argv);
 }
 void d3() {
-        char *wget3[] = {"wget","-q","--no-check-certificate","https://drive.google.com/uc?id=1ktjGgDkL0nNpY-vT7rT7O6ZI47Ke9xcp&export=download","-O","Film_for_Stevany.zip",NULL};
-        execv("/bin/wget", wget3);
+        char *argv[] = {"wget","-q","--no-check-certificate","https://drive.google.com/uc?id=1ktjGgDkL0nNpY-vT7rT7O6ZI47Ke9xcp&export=download","-O","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Film_for_Stevany.zip",NULL};
+        execv("/bin/wget", argv);
 }
 void unz1() {
-	char *unzip[] = {"unzip","-q","Photo_for_Stevany.zip","-d","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1",NULL};
-	execv("/bin/unzip", unzip);
+	char *argv[] = {"unzip","-q","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Photo_for_Stevany.zip","-d","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1",NULL};
+	execv("/bin/unzip", argv);
 }
 void unz2() {
-        char *unzip2[] = {"unzip","-q","Music_for_Stevany.zip","-d","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1",NULL};
-        execv("/bin/unzip", unzip2);
+        char *argv[] = {"unzip","-q","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Music_for_Stevany.zip","-d","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1",NULL};
+        execv("/bin/unzip", argv);
 }
 void unz3() {
-        char *unzip3[] = {"unzip","-q","Film_for_Stevany.zip","-d","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1",NULL};
-        execv("/bin/unzip", unzip3);
+        char *argv[] = {"unzip","-q","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Film_for_Stevany.zip","-d","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1",NULL};
+        execv("/bin/unzip", argv);
 }
 void mv1() {
-	char *mv[] = {"mv","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/FOTO/","Pyoto",NULL};
-	execv("/bin/mv", mv);
+	char *argv[] = {"mv","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/FOTO/","Pyoto",NULL};
+	execv("/bin/mv", argv);
 }
 void mv2() {
-        char *mv2[] = {"mv","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/MUSIK/","Musyik",NULL};
-        execv("/bin/mv", mv2);
+        char *argv[] = {"mv","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/MUSIK/","Musyik",NULL};
+        execv("/bin/mv", argv);
 }
 void mv3() {
-        char *mv3[] = {"mv","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/FILM/","Fylm",NULL};
-        execv("/bin/mv", mv3);
+        char *argv[] = {"mv","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/FILM/","Fylm",NULL};
+        execv("/bin/mv", argv);
 }
 void zip() {
-	char *zip[] = {"zip","-r","Lopyu_Stevany.zip","Pyoto","Musyik","Fylm",NULL};
-	execv("/bin/zip", zip);
+	char *argv[] = {"zip","-rmq","Lopyu_Stevany","Musyik","Pyoto","Fylm",NULL};
+        execv("/bin/zip",argv);
 }
 void rm() {
-	char *rm[] = {"rm","-r","Fylm","Musyik","Pyoto","Photo_for_Stevany.zip","Music_for_Stevany.zip","Film_for_Stevany.zip",NULL};
-	execv("/bin/rm", rm);
+	char *argv[] = {"rm","-r","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/MUSIK","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/FOTO","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/FILM","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Foto_For_Stevany.zip","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Musik_For_Stevany.zip","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Film_For_Stevany.zip",NULL};
+	execv("/bin/rm",argv);
 }
-
+void mv(char *basepath,char *destination){
+	char path[1000];
+	pid_t child_id;
+	int status;
+	struct dirent *dp;
+	DIR *dir = opendir(basepath);
+	if(!dir){
+		return;
+	}
+	while((dp = readdir(dir)) != NULL){
+		if(strcmp(dp->d_name,".") != 0 && strcmp(dp->d_name,"..") !=0){
+			strcpy(path,basepath);
+			strcat(path,"/");
+			strcat(path,dp->d_name);
+			child_id = fork();
+			if(child_id < 0){
+				exit(EXIT_FAILURE);
+			}
+			if(child_id == 0){
+				char *argv[]= {"mv",path,destination,NULL};
+				execv("/bin/mv",argv);
+			}
+		}
+	}
+	closedir(dir);
+}
+void mkd() {
+	char *mkd[] = {"mkdir","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Pyoto","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Musyik","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Fylm",NULL};
+	execv("/bin/mkdir",mkd);
+}
 int main() {
 	pid_t pid,sid;
 	pid = fork();
@@ -78,72 +105,112 @@ int main() {
 	close(STDIN_FILENO);
 	close(STDOUT_FILENO);
 	close(STDERR_FILENO);
-
-	while(1) {
+	while(1){
 		time_t t = time (NULL);
 		struct tm *tmp = localtime(&t);
 		if(tmp->tm_mon+1 == 4 && tmp->tm_mday == 9 && tmp->tm_hour == 16 && tmp->tm_min == 22 && tmp->tm_sec == 0){
-		        pid_t child_id = fork();
-		        if (child_id < 0) exit(EXIT_FAILURE);
-		        if (child_id == 0) d1();
-		        else {
-		                while((wait(&status))>0);
-		                pid_t child_id2 = fork();
-		                if (child_id2 < 0) exit(EXIT_FAILURE);
-		                if (child_id2 == 0) d2();
-		                else {
-		                        while((wait(&status))>0);
-		                        pid_t child_id3 = fork();
-		                        if (child_id3 < 0) exit(EXIT_FAILURE);
-		                        if (child_id3 == 0) d3();
-		                        else {
-		                                while((wait(&status))>0);
-		                                pid_t child_id4 = fork();
-		                                if (child_id4 < 0) exit(EXIT_FAILURE);
-		                                if (child_id4 == 0) unz1();
-		                                else {
-		                                        while((wait(&status))>0);
-		                                        pid_t child_id5 = fork();
-		                                        if (child_id5 < 0) exit(EXIT_FAILURE);
-		                                        if (child_id5 == 0) unz2();
-		                                        else {
-		                                                while((wait(&status))>0);
-		                                                pid_t child_id6 = fork();
-		                                                if (child_id6 < 0) exit(EXIT_FAILURE);
-		                                                if (child_id6 == 0) unz3();
-		                                                else {
-		                                                        while((wait(&status))>0);
-		                                                        pid_t child_id7 = fork();
-		                                                        if (child_id7 < 0) exit(EXIT_FAILURE);
-		                                                        if (child_id7 == 0) mv1();
-		                                                        else {
-		                                                                while((wait(&status))>0);
-		                                                                pid_t child_id8 = fork();
-		                                                                if (child_id8 < 0) exit(EXIT_FAILURE);
-		                                                                if (child_id8 == 0) mv2();
-		                                                                else {
-		                                                                        while((wait(&status))>0);
-		                                                                        pid_t child_id9 = fork();
-		                                                                        if (child_id9 < 0) exit(EXIT_FAILURE);
-		                                                                        if (child_id9 == 0) mv3();
-		                                                                        else {
-		                                                                        	while((wait(&status))>0);
-		                                                                        	pid_t child_id10 = fork();
-		       	                                                                	if (child_id10 < 0) exit(EXIT_FAILURE);
-		                                                                        	if (child_id10 == 0) zip();
-		    	                                                                  	else {
-			                                                                              	while((wait(&status))>0);
-													rm();
-		                                                                        	}
-		                                                                        }
-		                                                                }
-		                                                        }
-		                                                }
-		                                        }
-		                                }
-		                        }
-		                }
-		        }
+			int status;
+			pid_t child_id1 = fork();
+			if(child_id1 < 0) exit(EXIT_FAILURE);
+			if(child_id1 == 0){
+				char *argv[] = {"mkdir","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Musyik","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Fylm","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Pyoto",NULL};
+				execv("/bin/mkdir",argv);
+			}
+			else{
+				while ((wait(&status)) > 0);
+				pid_t child_id2 = fork();
+				if(child_id2 < 0) exit(EXIT_FAILURE);
+				if(child_id2 == 0){
+					pid_t child_id3 = fork();
+					if(child_id3 < 0) exit(EXIT_FAILURE);
+					if(child_id3 == 0){
+						char *argv[] = {"wget","-q","--no-check-certificate","https://drive.google.com/uc?id=1ZG8nRBRPquhYXq_sISdsVcXx5VdEgi-J&export=download","-O","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1//Musik_For_Stevany.zip",NULL};
+						execv("/bin/wget",argv);
+					}
+					else{
+						while((wait(&status)) > 0);
+						char *argv[] = {"unzip","-q","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Musik_For_Stevany.zip","-d","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1",NULL};
+						execv("/bin/unzip",argv);
+					}
+				}
+				else{
+					while((wait(&status)) > 0);
+					pid_t child_id4 = fork();
+					if(child_id4 < 0) exit(EXIT_FAILURE);
+					if(child_id4 == 0){
+						pid_t child_id5 = fork();
+						if(child_id5 < 0) exit(EXIT_FAILURE);
+						if(child_id5 == 0){
+							char *argv[] = {"wget","-q","--no-check-certificate","https://drive.google.com/uc?id=1FsrAzb9B5ixooGUs0dGiBr-rC7TS9wTD&export=download","-O","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Foto_For_Stevany.zip",NULL};
+							execv("/bin/wget",argv);
+						}
+						else{
+							while ((wait(&status)) > 0);
+							char *argv[] = {"unzip","-q","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Foto_For_Stevany.zip","-d","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1",NULL};
+							execv("/bin/unzip",argv);
+						}
+					}
+					else{
+						while ((wait(&status)) > 0);
+						pid_t child_id6 = fork();
+						if(child_id6 < 0) exit(EXIT_FAILURE);
+						if(child_id6 == 0){
+							pid_t child_id6 = fork();
+							if(child_id6 < 0) exit(EXIT_FAILURE);
+							if(child_id6 == 0){
+								char *argv[] = {"wget","-q","--no-check-certificate","https://drive.google.com/uc?id=1ktjGgDkL0nNpY-vT7rT7O6ZI47Ke9xcp&export=download","-O","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Film_For_Stevany.zip",NULL};
+								execv("/bin/wget",argv);
+							}
+							else{
+								while((wait(&status)) > 0);
+								char *argv[] = {"unzip","-q","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Film_For_Stevany.zip","-d","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/",NULL};
+								execv("/bin/unzip",argv);
+							}
+						}
+						else{
+							while((wait(&status)) > 0);
+							pid_t child_id7 = fork();
+							if(child_id7 < 0) exit(EXIT_FAILURE);
+							if(child_id7 == 0){
+								pid_t child_id8 = fork();
+								if(child_id8 < 0) exit(EXIT_FAILURE);
+								if(child_id8 == 0){
+									mv("/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/MUSIK","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Musyik");
+									_exit(1);
+								}
+								else{
+									while((wait(&status)) > 0);
+									pid_t child_id9 = fork();
+									if(child_id9 < 0) exit(EXIT_FAILURE);
+									if(child_id9 == 0){
+										mv("/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/FOTO","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Pyoto");
+										_exit(1);
+									}
+									else{
+										while((wait(&status)) > 0);
+										mv("/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/FILM","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1//Fylm");
+										_exit(1);
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		else if (tmp->tm_mon+1 == 4 && tmp->tm_mday == 9 && tmp->tm_hour == 22 && tmp->tm_min == 22 && tmp->tm_sec == 0){
+			int status2;
+			pid_t child_id10 = fork();
+			if(child_id10 < 0) exit(EXIT_FAILURE);
+			if(child_id10 == 0){
+				char *argv[] = {"zip","-rmq","Lopyu_Stevany","Musyik","Pyoto","Fylm",NULL};
+				execv("/bin/zip",argv);
+			}
+			else{
+				while((wait(&status2)) > 0);
+				char *argv[] = {"rm","-r","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/MUSIK","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/FOTO","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/FILM","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Foto_For_Stevany.zip","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Musik_For_Stevany.zip","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Film_For_Stevany.zip",NULL};
+				execv("/bin/rm",argv);
+			}
 		}
 		sleep(1);
 	}
