@@ -6,25 +6,29 @@ In the meantime, Steven hates SISOP Course very much like no other, Few hours af
 On her birthday, he wanted to give her a zip file containing all things that she likes. He wanted the zip to be organized by making a new folder for each file extension. 
 
 (a) Because she likes the letter Y so much, He wanted the name of the folder as Musyik for mp3, Fylm for mp4, and Pyoto for jpg
-	- The function using mkdir to create new directory.
+	
+- The function using mkdir to create new directory.
 ```shell
 char *argv[] = {"mkdir","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Musyik","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Fylm","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Pyoto",NULL};
 execv("/bin/mkdir",argv);
 ```
 (b) For music, he downloads it from the link below, so are the cases for films and photos.
-	- The function using wget to download all the file that needed and need to be quite "-q", and change the name to what you want "-O".
+
+- The function using wget to download all the file that needed and need to be quite "-q", and change the name to what you want "-O".
 ```shell
 char *argv[] = {"wget","-q","--no-check-certificate","https://drive.google.com/uc?id=1ZG8nRBRPquhYXq_sISdsVcXx5VdEgi-J&export=download","-O","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1//Musik_For_Stevany.zip",NULL};
 execv("/bin/wget",argv);
 ```
 (c) he didn’t want the folder to contain the zip files so he extracts the files first after downloading it. 
-	- The function to extract the sip using "unzip" quietly "-q". 
+
+- The function to extract the sip using "unzip" quietly "-q". 
 ```shell
 char *argv[] = {"unzip","-q","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Musik_For_Stevany.zip","-d","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1",NULL};
 execv("/bin/unzip",argv);
 ```
 (d) moving it to the folder that has been made (only the files).
-	- Move function that move a file manually.
+
+- Move function that move a file manually.
 ```shell
 void mv(char *basepath,char *destination){
 	char path[1000];
@@ -58,17 +62,20 @@ void mv(char *basepath,char *destination){
 mv("/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/MUSIK","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Musyik");
 ```
 (e) When it’s her birthday, all folder will be zipped with the name Lopyu_Stevany.zip and all the folders will be deleted. (Only the zip remains).
-   - using if because its only zipped on her birthday
+
+- using if because its only zipped on her birthday
 ```shell
 else if (tmp->tm_mon+1 == 4 && tmp->tm_mday == 9 && tmp->tm_hour == 22 && tmp->tm_min == 22 && tmp->tm_sec == 0){
 ```
-   - The zipping function using "zip" 
+
+- The zipping function using "zip" 
 
 ```shell
 char *argv[] = {"zip","-rmq","Lopyu_Stevany","Musyik","Pyoto","Fylm",NULL};
 execv("/bin/zip",argv);
 ```
-   - The remove function using "rm" recursively "-r"
+
+- The remove function using "rm" recursively "-r"
 ```shell
 char *argv[] = {"rm","-r","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/MUSIK","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/FOTO","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/FILM","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Foto_For_Stevany.zip","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Musik_For_Stevany.zip","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Film_For_Stevany.zip",NULL};
 execv("/bin/rm",argv);
@@ -76,7 +83,7 @@ execv("/bin/rm",argv);
 (f) To make his life easier, he wants all of the above to run automatically 6 hours before her birthday (except for point e of course)
 Steven is asking your help who is the greatest of the greats of sisop master to help get her heart. Help him!!!
 
- -To make run 6 hour before birthday so, setting the if to 16:22.
+- To make run 6 hour before birthday so, setting the if to 16:22.
 ```shell
 time_t t = time (NULL);
 struct tm *tmp = localtime(&t);
@@ -86,7 +93,7 @@ Note:
 Stevany’s birthday : 09 April Pukul 22.22 WIB
 All points are run by 1 script on the background, that includes downloading the zip file. So you just need to run 1 script and change the time and date to check the result.
 
-   -To run on the background, use Daemon. 
+- To run on the background, use Daemon. 
 ```shell
 int main() {
 	pid_t pid,sid;
