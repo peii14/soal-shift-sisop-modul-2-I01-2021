@@ -1,4 +1,116 @@
 # soal-shift-sisop-modul-2-I01-2021
+1. Once upon a time, there was a steven who lived a mediocre live. Steven had a girlfriend, but they have broken up before getting together. When he was thinking about his ex, he always watches https://www.youtube.com/watch?v=568DH_9CMKI to relieve his sadness. 
+
+In the meantime, Steven hates SISOP Course very much like no other, Few hours after breaking up with his girlfriend, he found another  woman named Stevany, but Stevany is the opposite of him because she likes SISOP course very much. Steven wanted to look good at SISOP course to impress her.
+
+On her birthday, he wanted to give her a zip file containing all things that she likes. He wanted the zip to be organized by making a new folder for each file extension. 
+(a) Because she likes the letter Y so much, He wanted the name of the folder as Musyik for mp3, Fylm for mp4, and Pyoto for jpg
+```shell
+char *argv[] = {"mkdir","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Musyik","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Fylm","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Pyoto",NULL};
+execv("/bin/mkdir",argv);
+```
+(b) For music, he downloads it from the link below, so are the cases for films and photos.
+```shell
+char *argv[] = {"wget","-q","--no-check-certificate","https://drive.google.com/uc?id=1ZG8nRBRPquhYXq_sISdsVcXx5VdEgi-J&export=download","-O","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1//Musik_For_Stevany.zip",NULL};
+execv("/bin/wget",argv);
+```
+(c) he didn’t want the folder to contain the zip files so he extracts the files first after downloading it. 
+```shell
+char *argv[] = {"unzip","-q","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Musik_For_Stevany.zip","-d","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1",NULL};
+execv("/bin/unzip",argv);
+```
+(d) moving it to the folder that has been made (only the files).
+```shell
+void mv(char *basepath,char *destination){
+	char path[1000];
+	pid_t child_id;
+	int status;
+	struct dirent *dp;
+	DIR *dir = opendir(basepath);
+	if(!dir){
+		return;
+	}
+	while((dp = readdir(dir)) != NULL){
+		if(strcmp(dp->d_name,".") != 0 && strcmp(dp->d_name,"..") !=0){
+			strcpy(path,basepath);
+			strcat(path,"/");
+			strcat(path,dp->d_name);
+			child_id = fork();
+			if(child_id < 0){
+				exit(EXIT_FAILURE);
+			}
+			if(child_id == 0){
+				char *argv[]= {"mv",path,destination,NULL};
+				execv("/bin/mv",argv);
+			}
+		}
+	}
+	closedir(dir);
+}
+```
+```shell
+mv("/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/MUSIK","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Musyik");
+```
+(e) When it’s her birthday, all folder will be zipped with the name Lopyu_Stevany.zip and all the folders will be deleted. (Only the zip remains).
+   - using if because its only zipped on her birthday
+```shell
+else if (tmp->tm_mon+1 == 4 && tmp->tm_mday == 9 && tmp->tm_hour == 22 && tmp->tm_min == 22 && tmp->tm_sec == 0){
+```
+   - The zipping function using "zip" 
+
+```shell
+char *argv[] = {"zip","-rmq","Lopyu_Stevany","Musyik","Pyoto","Fylm",NULL};
+execv("/bin/zip",argv);
+```
+   - The remove function using "rm" recursively "-r"
+```shell
+char *argv[] = {"rm","-r","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/MUSIK","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/FOTO","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/FILM","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Foto_For_Stevany.zip","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Musik_For_Stevany.zip","/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1/Film_For_Stevany.zip",NULL};
+execv("/bin/rm",argv);
+```
+(f) To make his life easier, he wants all of the above to run automatically 6 hours before her birthday (except for point e of course)
+Steven is asking your help who is the greatest of the greats of sisop master to help get her heart. Help him!!!
+
+ -To make run 6 hour before birthday so, setting the if to 16:22.
+```shell
+time_t t = time (NULL);
+struct tm *tmp = localtime(&t);
+if(tmp->tm_mon+1 == 4 && tmp->tm_mday == 9 && tmp->tm_hour == 16 && tmp->tm_min == 22 && tmp->tm_sec == 0){
+```
+Note:
+Stevany’s birthday : 09 April Pukul 22.22 WIB
+All points are run by 1 script on the background, that includes downloading the zip file. So you just need to run 1 script and change the time and date to check the result.
+
+   -To run on the background, use Daemon. 
+```shell
+int main() {
+	pid_t pid,sid;
+	pid = fork();
+	if(pid < 0){
+		exit(EXIT_FAILURE);
+	}
+	if(pid > 0){
+		exit(EXIT_SUCCESS);
+	}
+	umask(0);
+	sid = setsid();
+	if(sid < 0){
+		exit(EXIT_FAILURE);
+	}
+	if((chdir("/home/ascarya/sisop/soal-shift-sisop-modul-2-I01-2021/soal1")) < 0){
+		exit(EXIT_FAILURE);
+	}
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
+	close(STDERR_FILENO);
+	while(1){
+    		sleep(1);
+	}
+}
+```
+The Screenshot of the output.
+
+[![sisop-2.png](https://i.postimg.cc/NF2zqG63/sisop-2.png)](https://postimg.cc/307B2Tb1)
+
 
 2. Loba works in a famous pet shop, one day he got a zip containing lots of pets photos and he was ordered to categorize the photos of these pets. Loba finds it difficult to do his work manually, moreover there is the possibility that he will be ordered to do the same thing multiple times. You are Loba's best friend and he is asking for your help to help with his work. 
 
